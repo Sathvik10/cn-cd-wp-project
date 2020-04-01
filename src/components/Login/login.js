@@ -25,7 +25,7 @@ class Login extends React.Component {
         return (
             <div className='row-line' id='login-window' >  
                 <Row>   
-                    <Col  className='column'>
+                    <Col  className='column' style={{color:'white'}}>
                         Helllo
                     </Col>
             <Col lg='3' md='3' sm='3' className='column left-col' >
@@ -33,7 +33,7 @@ class Login extends React.Component {
                 <br/>
                     <CardBody>
                         <div className='text-center'>
-                        <CardTitle className='head-line'>Create-Room</CardTitle>
+                        <CardTitle className='head-line color-white'>Create-Room</CardTitle>
 
                         </div>
                         

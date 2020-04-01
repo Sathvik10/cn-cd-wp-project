@@ -25,7 +25,7 @@ window.addEventListener('load', ()=>{
         }
 
         var pc = [];
-
+        var users = [];
         let socket = io('/stream');
 
         var socketId = '';
@@ -38,20 +38,23 @@ window.addEventListener('load', ()=>{
 
             socket.emit('subscribe', {
                 room: room,
-                socketId: socketId
+                socketId: socketId,
+                username: username
             });
 
 
             socket.on('new user', (data)=>{
-                socket.emit('newUserStart', {to:data.socketId, sender:socketId});
+                socket.emit('newUserStart', {to:data.socketId, sender:socketId,user:username});
                 pc.push(data.socketId);
                 init(true, data.socketId);
+                addParticipant(data.user);
             });
 
 
             socket.on('newUserStart', (data)=>{
                 pc.push(data.sender);
                 init(false, data.sender);
+                addParticipant(data.user);
             });
 
 
@@ -96,13 +99,27 @@ window.addEventListener('load', ()=>{
                 h.addChat(data, 'remote');
             })
 
-            socket.on('typingMsg',(username)=>{
-                console.log('typing')
-                
-                document.getElementById('typing').innerHTML=' is typing';
+            socket.on('typingMsg',(data)=>{
+                document.getElementById('typing').innerHTML=data.username+' is typing';
             })
         });
 
+        function addParticipant(user){
+            console.log(user);
+            let newLogo = document.createElement('p');
+            newLogo.id = `${user}-logo`;            
+            newLogo.innerHTML = user.charAt(0);            
+            //create a new div for card
+            
+            //create a new div for everything
+            let div = document.createElement('div');
+            div.className = 'circle';
+            div.id = user;
+            div.appendChild(newLogo);
+            
+            //put div in videos elem
+            document.getElementById('participants').appendChild(div);
+        }
 
         function sendMsg(msg){
             
@@ -122,7 +139,11 @@ window.addEventListener('load', ()=>{
         }
 
         function typingEvent(username){
-            socket.emit('typingMsg',{data:username});
+            let data = {
+                room:room,
+                username:username
+            };
+            socket.emit('typingMsg',data);
         }
 
         function init(createOffer, partnerName){
@@ -180,7 +201,7 @@ window.addEventListener('load', ()=>{
                     
                     //create a new div for card
                     let cardDiv = document.createElement('div');
-                    cardDiv.className = 'card mb-3';
+                    cardDiv.className = 'card border-primary mb-3';
                     cardDiv.appendChild(newVid);
                     
                     //create a new div for everything

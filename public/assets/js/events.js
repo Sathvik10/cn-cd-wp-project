@@ -1,5 +1,9 @@
 import helpers from './helpers.js';
 
+window.addEventListener('online',()=>{
+    alert('offline')
+})
+
 window.addEventListener('load', ()=>{
     //When the chat icon is clicked
     document.querySelector('#toggle-chat-pane').addEventListener('click', (e)=>{
@@ -12,7 +16,6 @@ window.addEventListener('load', ()=>{
             }
         }, 300);
     });
-
 
     //When the video frame is clicked. This will enable picture-in-picture
    

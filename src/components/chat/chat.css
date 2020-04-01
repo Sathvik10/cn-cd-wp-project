@@ -3,8 +3,7 @@
     float: left;
 }
 .files {
-    height: 60vh;
-    overflow: hidden;
+    height: 100vh;
     border: 3px solid #800A94 ;
     padding-top: 0em;
     margin-top: 0em;
@@ -85,4 +84,20 @@
     }
 #chat-input {
     position: relative;
+}
+
+#participants{
+    background-color: #aaabb8;
+    padding-left: 10px;
+    border-radius: 5px;
+    margin: 5px;
+}
+#videos{
+    position: relative;
+    margin-top: 10px;
+    padding: 0;
+}
+.card{
+    border-radius: 30%;
+    margin: 5px;
 }

@@ -70,7 +70,7 @@ class chat extends React.Component {
             </div>
             
             <div class="row">
-                <div class='col-md-3 mt-2 files'>
+                <div class='col-md-3 mt-2 overflow-hidden files'>
 
                     Images Steganography
                     <div id="drop-zone">
@@ -83,10 +83,9 @@ class chat extends React.Component {
                     </div>
 
 
-                <div class="col-md-6 mt-3 mb-3 main">
-                
-                <video class="local-video" id='local' autoplay muted></video>
-            
+                <div class="col-md-6 mt-3 mb-3 central-col">
+                    <div class='row' id='participants'></div>
+                    <video class="local-video" id='local' autoplay muted></video>
                     <div class="row" id='videos'></div>
                 </div>
 

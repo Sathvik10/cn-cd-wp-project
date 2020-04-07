@@ -3,18 +3,17 @@
     float: left;
 }
 .files {
+    overflow: hidden;
     height: 100vh;
-    border: 3px solid #800A94 ;
+    border: 3px solid #aaabb8 ;
     padding-top: 0em;
     margin-top: 0em;
-
-    background-color: #D0A7F1;
-
+    background-color: #29648a;
     border-radius: 10px;
 }
 #chat-pane {
-    border: 3px solid #800A94 ;
-    background-color: #D0A7F1;
+    border: 3px solid #aaabb8 ;
+    background-color: #29648a;
     height: 90vh;
     border-radius: 10px;
 }
@@ -24,7 +23,7 @@
     width: 300px;
     /*Sort of important*/
     height: 200px;
-    position:absolute;
+    position: absolute;
     left:50%;
     background-color: #ffffff;
     top:100px;
@@ -39,7 +38,7 @@
     color: rgba(0,0,0,.3);
 }
 .local-video{
-    z-index: -1;
+    z-index: 1;
 }
     #drop-zone input {
         /*Important*/
@@ -87,7 +86,6 @@
 }
 
 #participants{
-    background-color: #aaabb8;
     padding-left: 10px;
     border-radius: 5px;
     margin: 5px;
@@ -97,7 +95,63 @@
     margin-top: 10px;
     padding: 0;
 }
-.card{
-    border-radius: 30%;
-    margin: 5px;
+.pat{
+    width: 40px;
+    height: 40px;
+    color: #ffffff;
+    background-color: #25274d;
+    font-size: 30px;
+    align-items: center;
+    vertical-align: text-top;
 }
+
+.collapsible {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    position: absolute;
+    border-radius: 5px;
+    top: 400px;
+    left: 20px;
+    padding: 18px;
+    width: 300px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .collapsible:hover {
+    background-color: #25274d;
+    color: #ffffff;
+  }
+  .tooltip .tooltiptext {
+    opacity: 0;
+    transition: opacity 1s;
+    background-color: #aaabb8;
+
+  }
+  .tooltip {
+    background-color: #aaabb8;
+    border: 0px;
+  }
+  
+  .tooltip:hover .tooltiptext {
+      background-color: #aaabb8;
+    opacity: 1;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .encrypt-message {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    display: none;
+    overflow: hidden;
+    border: 0em;
+    width: 300px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 5px;
+  }

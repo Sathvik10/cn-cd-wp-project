@@ -59,33 +59,64 @@ class chat extends React.Component {
             e.preventDefault();
             var fileName = e.target.value; 
         })
-    
+
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "none") {
+            content.style.display = "block";
+            } else {
+            content.style.display = "none";
+            }
+        });
+        }
     }
     render(){
         return(
             <div class="container-fluid room-comm" hidden>
                
-             <div class="row">
-                <video class="local-video" id='local' volume='0' autoplay muted></video>
-            </div>
             
             <div class="row">
-                <div class='col-md-3 mt-2 overflow-hidden files'>
+                <div class='col-md-3 mt-2 files'>
+                    Image Steganography<br/>
+                    <input type = "radio" id = "encrypt" name="encrypt-or-decrypt" value ="encrypt" />
+                    <label for="encrypt">Encrypt and send</label><br/>
+                    <input type = "radio" id = "decrypt" name="encrypt-or-decrypt" value ="decrypt" />
+                    <label for="decrypt">Decrypt</label><br />
+                    <div>
+                      Enter the data to be encrypted
+                      <input id = "image-steganography-text" type="text" class="form-control form-rounded" placeholder="Text input" />
+                    </div>
 
-                    Images Steganography
+
                     <div id="drop-zone">
                      Drop files here...
                     <div id="clickHere">
                     <br/>
                     <input type="file" name="file" id="file" />
-                </div>      
-                </div>
+                    </div>      
+                    </div>
+                    <div class='container'>
+                        <button type="button" class="collapsible " id="btn-colp"
+                            data-toggle="tooltip" data-placement="bottom" title="Click to send an encrpted message along with file">
+                                Add Encrpted Message</button>
+                        <input class='input encrypt-message' id='encrypt-message' 
+                        placeholder='Encrypted Message'
+                        type='text'/>
+                    </div>
+                    
                     </div>
 
 
                 <div class="col-md-6 mt-3 mb-3 central-col">
+                
                     <div class='row' id='participants'></div>
-                    <video class="local-video" id='local' autoplay muted></video>
+                    <div id='local' ></div>
+
                     <div class="row" id='videos'></div>
                 </div>
 

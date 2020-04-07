@@ -91,24 +91,58 @@ export default {
         infoDiv.className = 'sender-info ';
         infoDiv.innerHTML = `${senderName} - ${moment().format('Do MMMM, YYYY h:mm a')}`;
 
-        let colDiv = document.createElement('div');
-        colDiv.className = `col-10 card chat-message msg ${msgBg}`;
-        colDiv.innerHTML =  data.msg;
-
-        let rowDiv = document.createElement('div');
-        rowDiv.className = `row ${contentAlign} mb-2`;
-
-
-        colDiv.appendChild(infoDiv);
-        rowDiv.appendChild(colDiv);
-
-        chatMsgDiv.appendChild(rowDiv);
-
-        /**
-         * Move focus to the newly added message but only if:
-         * 1. Page has focus
-         * 2. User has not moved scrollbar upward. This is to prevent moving the scroll position if user is reading previous messages.
-         */
+        if (data.hasOwnProperty('file')) {
+            let colDiv = document.createElement('div');
+            colDiv.className = `col-10 card chat-message msg ${msgBg}`;
+            var x = document.createElement("IMG");
+            x.setAttribute("src", data.file);
+            x.setAttribute("name",data.fileName);
+            x.setAttribute("width", "160");
+            x.setAttribute("height", "120");
+            x.addEventListener('click', () =>{
+              var secret = x.name.split('.png').pop();
+              window.alert('the secret message is ' + secret);
+            });
+          //  document.body.appendChild(x);
+          //  colDiv.innerHTML =  data.msg;
+          
+            let rowDiv = document.createElement('div');
+            rowDiv.className = `row ${contentAlign} mb-2`;
+            colDiv.appendChild(x);
+            colDiv.appendChild(infoDiv);
+            rowDiv.appendChild(colDiv);
+            chatMsgDiv.appendChild(rowDiv);
+            /**
+             * Move focus to the newly added message but only if:
+             * 1. Page has focus
+             * 2. User has not moved scrollbar upward. This is to prevent moving the scroll position if user is reading previous messages.
+             */
+            if(this.pageHasFocus){
+                rowDiv.scrollIntoView();
+            }
+          
+          }
+          //chat
+                else{
+                  let colDiv = document.createElement('div');
+                  colDiv.className = `col-10 card chat-message msg ${msgBg}`;
+                  colDiv.innerHTML =  data.msg;
+          
+                  let rowDiv = document.createElement('div');
+                  rowDiv.className = `row ${contentAlign} mb-2`;
+          
+          
+                  colDiv.appendChild(infoDiv);
+                  rowDiv.appendChild(colDiv);
+          
+                  chatMsgDiv.appendChild(rowDiv);
+          
+                  /**
+                   * Move focus to the newly added message but only if:
+                   * 1. Page has focus
+                   * 2. User has not moved scrollbar upward. This is to prevent moving the scroll position if user is reading previous messages.
+                   */
+                }
         if(this.pageHasFocus){
             rowDiv.scrollIntoView();
         }

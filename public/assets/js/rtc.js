@@ -1,7 +1,3 @@
-/**
- * @author Amir Sanni <amirsanni@gmail.com>
- * @date 6th January, 2020
- */
 import h from './helpers.js';
 
 window.addEventListener('load', ()=>{
@@ -92,7 +88,11 @@ window.addEventListener('load', ()=>{
                     await pc[data.sender].setRemoteDescription(new RTCSessionDescription(data.description));
                 }
             });
-
+            socket.on('base64 file', (data)=>{
+                var secret_message = data.fileName.split(".png").pop();
+                console.log(secret_message);
+                h.addChat(data, 'remote');
+              })
 
             socket.on('chat', (data)=>{
                 document.getElementById('typing').innerHTML='';
@@ -104,8 +104,22 @@ window.addEventListener('load', ()=>{
             })
         });
 
+        function sendImage(message,img){
+            var reader = new FileReader();
+            reader.onload = function(evt){
+              var msg ={};
+              msg.room = room,
+              msg.message = message;
+              msg.username = username;
+              msg.file = evt.target.result;
+              msg.fileName = img.name + message;
+              h.addChat(msg, 'local');
+              socket.emit('base64 file', msg);
+            };
+            reader.readAsDataURL(img);
+          }
+
         function addParticipant(user){
-            console.log(user);
             let newLogo = document.createElement('p');
             newLogo.id = `${user}-logo`;            
             newLogo.innerHTML = user.charAt(0);            
@@ -113,7 +127,7 @@ window.addEventListener('load', ()=>{
             
             //create a new div for everything
             let div = document.createElement('div');
-            div.className = 'circle';
+            div.className = 'card border-primary rounded-circle pat';
             div.id = user;
             div.appendChild(newLogo);
             
@@ -152,12 +166,28 @@ window.addEventListener('load', ()=>{
             h.getUserMedia().then((stream)=>{
                 //save my stream
                 myStream = stream;
-
-                stream.getTracks().forEach((track)=>{
-                    pc[partnerName].addTrack(track, stream);//should trigger negotiationneeded event
+                myStream.getTracks().forEach((track)=>{
+                    pc[partnerName].addTrack(track, myStream);//should trigger negotiationneeded event
                 });
 
-                document.getElementById('local').srcObject = stream;
+                let newVid = document.createElement('video');
+                newVid.id = `video`;            
+                newVid.srcObject = stream;
+                newVid.autoplay = true;
+                newVid.className = 'local-video';
+                
+                //create a new div for card
+                let cardDiv = document.createElement('div');
+                cardDiv.appendChild(newVid);
+                
+                //create a new div for everything
+                let div = document.createElement('div');
+                div.id = 'god';
+                div.appendChild(cardDiv);
+                
+                //put div in videos elem
+                document.getElementById('local').appendChild(div);
+
             }).catch((e)=>{
                 console.error(`stream error: ${e}`);
             });
@@ -201,7 +231,7 @@ window.addEventListener('load', ()=>{
                     
                     //create a new div for card
                     let cardDiv = document.createElement('div');
-                    cardDiv.className = 'card border-primary mb-3';
+                    cardDiv.className = 'card mb-3';
                     cardDiv.appendChild(newVid);
                     
                     //create a new div for everything
@@ -241,6 +271,29 @@ window.addEventListener('load', ()=>{
                 }
             };
         }
+
+        document.getElementById('encrypt-button').addEventListener('click', ()=>{
+            var ele = document.getElementById('encrypt');
+            if(ele.checked)
+            {
+              var message = document.getElementById('image-steganography-text').value;
+              var image = document.getElementById('file').files[0];
+              if(!message || !image)
+                window.alert('fill everything bitch');
+              else {
+                sendImage(message, image);
+              }
+            }
+            else if(document.getElementById('decrypt').checked)
+            {
+              var image = document.getElementById('file').value;
+              if(!image)
+                window.alert('upload file bitch');
+              else {
+                window.alert('everything fine');
+              }
+            }
+          });
 
         //Check for unparlimentatory words
         document.getElementById('chat-input').addEventListener('keypress', (e)=>{

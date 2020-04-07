@@ -106,7 +106,7 @@ class header extends React.Component {
                   <span className="App-name" >skype alla Hype</span>
                 </Col>
 
-                <Col md='4' xs ='6' className="room-comm" hidden id='Hidden-room'>
+                <Col md='4' xs ='6' className="room-comm justify-content-end" hidden id='Hidden-room'>
                   <button class="btn btn-sm rounded-0 btn-no-effect" id='toggle-video'>
                       <i class="fa fa-video text-white"></i>
                   </button>

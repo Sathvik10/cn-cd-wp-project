@@ -1,6 +1,6 @@
 import helpers from './helpers.js';
 
-window.addEventListener('online',()=>{
+window.addEventListener('offline',()=>{
     alert('offline')
 })
 
@@ -38,6 +38,18 @@ window.addEventListener('load', ()=>{
         }
     });
 
+    /**
+    //double click on image should decode it
+    document.getElementById('x').addEventListener('ondblclick', () =>{
+      alert(document.getElementById('x').name);
+    });
+**/
+    if(document.getElementById('x'))
+    {
+    document.getElementById('rowDiv').addEventListener('ondblclick', () =>{
+        window.alert(document.getElementById('x').name);
+    });
+    }
 
     //When the 'Create room" is button is clicked
     document.getElementById('create-room').addEventListener('click', (e)=>{

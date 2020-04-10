@@ -92,6 +92,7 @@ export default {
         infoDiv.innerHTML = `${senderName} - ${moment().format('Do MMMM, YYYY h:mm a')}`;
 
         if (data.hasOwnProperty('file')) {
+            console.log('file')
             let colDiv = document.createElement('div');
             colDiv.className = `col-10 card chat-message msg ${msgBg}`;
             var x = document.createElement("IMG");
@@ -142,10 +143,11 @@ export default {
                    * 1. Page has focus
                    * 2. User has not moved scrollbar upward. This is to prevent moving the scroll position if user is reading previous messages.
                    */
+                //   if(this.pageHasFocus){
+                //     rowDiv.scrollIntoView();
+                // }
                 }
-        if(this.pageHasFocus){
-            rowDiv.scrollIntoView();
-        }
+        
     },
 
 

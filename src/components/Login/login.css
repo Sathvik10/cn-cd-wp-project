@@ -2,16 +2,17 @@
     border-color: #ffffff;
     border: 10px;
     /* background-color: #D0A7F1; */
-    height: auto;
     height: 85vh;
     margin: 2px;
 }
 .row-line {
     overflow: hidden;
 }
-
+.blog {
+    justify-content: center;
+    font-size: 40px;
+}
 .head-line {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 30pt;
     color: #ffffff;
 }
@@ -20,10 +21,11 @@
     border-radius: 30%;
     border-collapse: collapse;
 }
-
+#room-created {
+    color: #ffffff;
+}
 #login-window {
-    background-color: #25274d;
-    /* background-image : linear-gradient(to top right, #25274d,#464866); */
+     background-image : linear-gradient(to bottom, #25274d,#4f4a41,#6e6658); 
     /* background-image : linear-gradient(to top right, #254E58,#88bdbc);
     background-image : linear-gradient(to top right, #254E58,#88bdbc); */
 

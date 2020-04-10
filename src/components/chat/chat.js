@@ -6,7 +6,9 @@ class chat extends React.Component {
         var dropZoneId = "drop-zone";
         var buttonId = "clickHere";
         var mouseOverClass = "mouse-over";
-    
+        var custombtn = document.getElementById('custom-button');
+        var customtxt = document.getElementById('custom-text');
+        var file = document.getElementById('file');
         var dropZone = document.getElementById(dropZoneId);
         var ooleft = dropZone.offsetleft;
         var ooright = dropZone.outerWidth + ooleft;
@@ -17,7 +19,6 @@ class chat extends React.Component {
         document.getElementById(dropZoneId).addEventListener("dragover", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('dragover')
             dropZone.classList.add(mouseOverClass);
             var x = e.pageX;
             var y = e.pageY;
@@ -52,13 +53,12 @@ class chat extends React.Component {
         }
     
         document.getElementById(dropZoneId).addEventListener("drop", function (e) {
-            document.getElementById(dropZoneId).classList.remove(mouseOverClass);
-        }, true);
-
-        document.getElementById('file').addEventListener("change",(e)=>{
             e.preventDefault();
-            var fileName = e.target.value; 
-        })
+            console.log(e.dataTransfer.files[0].name);
+            document.getElementById(dropZoneId).classList.remove(mouseOverClass);
+            customtxt.innerHTML=e.dataTransfer.files[0].name;
+
+        }, true);
 
         var coll = document.getElementsByClassName("collapsible");
         var i;
@@ -74,6 +74,19 @@ class chat extends React.Component {
             }
         });
         }
+        
+
+        custombtn.addEventListener('click',function(){
+            file.click();
+        })
+        file.addEventListener('change',function(){
+            if (file.value)
+            {
+                customtxt.innerHTML=file.value
+            }
+        })
+
+
     }
     render(){
         return(
@@ -81,7 +94,7 @@ class chat extends React.Component {
                
             
             <div class="row">
-                <div class='col-md-3 mt-2 files'>
+                <div className='col-md-3 mt-2' id="files">
                     Image Steganography<br/>
                     <input type = "radio" id = "encrypt" name="encrypt-or-decrypt" value ="encrypt" />
                     <label for="encrypt">Encrypt and send</label><br/>
@@ -89,25 +102,30 @@ class chat extends React.Component {
                     <label for="decrypt">Decrypt</label><br />
                     <div>
                       Enter the data to be encrypted
-                      <input id = "image-steganography-text" type="text" class="form-control form-rounded" placeholder="Text input" />
+                        <input id = "image-steganography-text" type="text" class="form-control form-rounded" placeholder="Text input" />
+                        <button className='button' type='button rounded-border' id='encrypt-button'>send</button>
                     </div>
 
-
+                    <br/>
+                    <button type='button' id='custom-button'>Choose A File</button>
+                    <br/>
+                    <span id='custom-text'>File Name</span>
                     <div id="drop-zone">
                      Drop files here...
-                    <div id="clickHere">
+                    <div id="clickHere" hidden>
                     <br/>
-                    <input type="file" name="file" id="file" />
+                    <input type="file" name="file"  id="file" />
+                    
                     </div>      
                     </div>
-                    <div class='container'>
+                    {/* <div class='container'>
                         <button type="button" class="collapsible " id="btn-colp"
                             data-toggle="tooltip" data-placement="bottom" title="Click to send an encrpted message along with file">
                                 Add Encrpted Message</button>
                         <input class='input encrypt-message' id='encrypt-message' 
                         placeholder='Encrypted Message'
                         type='text'/>
-                    </div>
+                    </div> */}
                     
                     </div>
 

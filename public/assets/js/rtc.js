@@ -5,7 +5,7 @@ window.addEventListener('load', ()=>{
     const username = sessionStorage.getItem('username');
 
     if(!room){
-        document.getElementById('#room-create').attributes.removeNamedItem('hidden');
+      //  document.getElementById('#room-created').attributes.removeNamedItem('hidden');
     }
 
     else if(!username){
@@ -21,7 +21,6 @@ window.addEventListener('load', ()=>{
         }
 
         var pc = [];
-        var users = [];
         let socket = io('/stream');
 
         var socketId = '';
@@ -43,6 +42,7 @@ window.addEventListener('load', ()=>{
                 socket.emit('newUserStart', {to:data.socketId, sender:socketId,user:username});
                 pc.push(data.socketId);
                 init(true, data.socketId);
+                //save username
                 addParticipant(data.user);
             });
 
@@ -64,12 +64,12 @@ window.addEventListener('load', ()=>{
                     data.description ? await pc[data.sender].setRemoteDescription(new RTCSessionDescription(data.description)) : '';
 
                     h.getUserMedia().then(async (stream)=>{
-                        if(!document.getElementById('local').srcObject){
-                            document.getElementById('local').srcObject = stream;
+                        if(!document.getElementById('yyu').srcObject){
+                            document.getElementById('yyu').srcObject = stream;
+                            myStream = stream;
                         }
-
+                        
                         //save my stream
-                        myStream = stream;
                         stream.getTracks().forEach((track)=>{
                             pc[data.sender].addTrack(track, stream);
                         });
@@ -99,12 +99,18 @@ window.addEventListener('load', ()=>{
                 h.addChat(data, 'remote');
             })
 
+            socket.on('removeParticipant', (data)=>{
+                removeParticipants(data.sender)
+            })
+
             socket.on('typingMsg',(data)=>{
                 document.getElementById('typing').innerHTML=data.username+' is typing';
             })
+
         });
 
         function sendImage(message,img){
+            console.log('Hi');
             var reader = new FileReader();
             reader.onload = function(evt){
               var msg ={};
@@ -118,10 +124,15 @@ window.addEventListener('load', ()=>{
             };
             reader.readAsDataURL(img);
           }
-
+        function removeParticipants(username){
+            var element = document.getElementById(username);
+            if (element)
+                element.remove()
+        }
         function addParticipant(user){
             let newLogo = document.createElement('p');
             newLogo.id = `${user}-logo`;            
+            console.log(user)
             newLogo.innerHTML = user.charAt(0);            
             //create a new div for card
             
@@ -161,18 +172,22 @@ window.addEventListener('load', ()=>{
         }
 
         function init(createOffer, partnerName){
+            console.log(h.getIceServer())
             pc[partnerName] = new RTCPeerConnection(h.getIceServer());
-            
+            console.log('once')
+
             h.getUserMedia().then((stream)=>{
                 //save my stream
-                myStream = stream;
+               // if(createOffer)
+                    myStream = stream;
+                
                 myStream.getTracks().forEach((track)=>{
                     pc[partnerName].addTrack(track, myStream);//should trigger negotiationneeded event
                 });
 
                 let newVid = document.createElement('video');
-                newVid.id = `video`;            
-                newVid.srcObject = stream;
+                newVid.id = `yyu`;            
+                newVid.srcObject = myStream;
                 newVid.autoplay = true;
                 newVid.className = 'local-video';
                 
@@ -187,7 +202,10 @@ window.addEventListener('load', ()=>{
                 
                 //put div in videos elem
                 document.getElementById('local').appendChild(div);
-
+                document.getElementById('yyu').addEventListener('click',(e)=>{
+                    e.preventDefault();
+                    console.log(e.target.srcObject.getVideoTracks())
+                })
             }).catch((e)=>{
                 console.error(`stream error: ${e}`);
             });
@@ -255,6 +273,7 @@ window.addEventListener('load', ()=>{
                         break;
                         
                     case 'closed':
+                        window.alert(' signal state closed');
                         h.closeVideo(partnerName);
                         break;
                 }
@@ -265,7 +284,7 @@ window.addEventListener('load', ()=>{
             pc[partnerName].onsignalingstatechange = (d)=>{
                 switch(pc[partnerName].signalingState){
                     case 'closed':
-                        console.log("Signalling state is 'closed'");
+                        window.alert(' signal state closed');
                         h.closeVideo(partnerName);
                         break;
                 }
@@ -301,28 +320,63 @@ window.addEventListener('load', ()=>{
             if(e.which === 13 && (e.target.value.trim())){
                 e.preventDefault();
                 var msg = e.target.value;
-                if (msg === 'fuck' || msg === 'Fuck')
-                window.alert('Dont send bad words bitch');
-                else
-                sendMsg(e.target.value);
+                fetch("/currency", {
+                    method: 'POST',
+                    body: JSON.stringify({message: msg}),
+                    headers: {
+                    'Content-Type': 'application/json'}
+                    })
+                    .then(function(response) {
+                        if (response.status >= 400) {
+                        throw new Error("Bad response from server");
+                        }
+                        return response.json();
+                    })
+                    .then(function(data){
+                        if(data.status)
+                        {
+                            if (data.code === 100) 
+                            {
+                                sendMsg(data.message);
+                            }
+                            else if (data.code === 169)
+                            {
+                                window.alert(data.message)
+                            }
+                        }
+                        else
+                            window.alert(data.message)
+                    }).catch(function(err) {
+                    console.log(err)
+                    });
 
                 setTimeout(()=>{
                     e.target.value = '';
                 }, 50);
             }
         });
-
+        
 
         document.getElementById('toggle-video').addEventListener('click', (e)=>{
             e.preventDefault();
             myStream.getVideoTracks()[0].enabled = !(myStream.getVideoTracks()[0].enabled);
-
             //toggle video icon
             e.srcElement.classList.toggle('fa-video');
             e.srcElement.classList.toggle('fa-video-slash');
         });
 
+        document.getElementById('leave-room').addEventListener('click',(e)=>{
+            e.preventDefault();
+            let data = {
+                room: room,
+                sender: username
+            };
 
+            //emit chat message
+            socket.emit('removeParticipant', data);
+            //console.log(pc[socketId])
+            window.location ='/'
+        })
         document.getElementById('toggle-mute').addEventListener('click', (e)=>{
             e.preventDefault();
 

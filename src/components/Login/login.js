@@ -25,10 +25,10 @@ class Login extends React.Component {
         return (
             <div className='row-line' id='login-window' >  
                 <Row>   
-                    <Col  className='column' style={{color:'white'}}>
-                        Helllo
+                    <Col  className='blog column' style={{color:'white'}}>
+                        Temptations
                     </Col>
-            <Col lg='3' md='3' sm='3' className='column left-col' >
+            <Col lg='3' md='3' sm='3' className='left-col' >
                 <br/>
                 <br/>
                     <CardBody>

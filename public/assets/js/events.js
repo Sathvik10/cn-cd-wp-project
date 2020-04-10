@@ -20,9 +20,8 @@ window.addEventListener('load', ()=>{
     //When the video frame is clicked. This will enable picture-in-picture
    
     document.getElementById('local').addEventListener('click', ()=>{
-        console.log('Video clicked')
         if (!document.pictureInPictureElement) {
-            document.getElementById('local').requestPictureInPicture()
+            document.getElementById('yyu').requestPictureInPicture()
             .catch(error => {
                 // Video failed to enter Picture-in-Picture mode.
                 console.error(error);
@@ -57,7 +56,6 @@ window.addEventListener('load', ()=>{
         console.log('hrhrh')
         let roomName = document.querySelector('#room-name').value;
         let yourName = document.querySelector('#your-name').value;
-
         if(roomName && yourName){
             //remove error message, if any
             document.querySelector('#err-msg').innerHTML = "";

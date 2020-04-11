@@ -6,43 +6,51 @@ const stream = (socket)=>{
 
         //Inform other members in the room of new user's arrival
         if(socket.adapter.rooms[data.room].length > 1){
-            socket.to(data.room).emit('new user', {socketId:data.socketId , user: data.username});
+            socket.to(data.room).emit('new user', {socketId:data.socketId});
         }
+        console.log(" subscribed a room");
+        console.log(socket.rooms);
     });
 
 
     socket.on('newUserStart', (data)=>{
-        socket.to(data.to).emit('newUserStart', {sender:data.sender,user:data.user});
+        console.log(" new user start");
+        socket.to(data.to).emit('newUserStart', {sender:data.sender});
     });
 
 
     socket.on('sdp', (data)=>{
+        console.log(" sdp");
+
         socket.to(data.to).emit('sdp', {description: data.description, sender:data.sender});
     });
 
 
     socket.on('ice candidates', (data)=>{
+        console.log(" ice candidates ");
+
         socket.to(data.to).emit('ice candidates', {candidate:data.candidate, sender:data.sender});
     });
 
     socket.on('base64 file', function (msg) {
-        console.log('received base64 file from' + msg.username);
-        socket.username = msg.username;
-        // socket.broadcast.emit('base64 image', //exclude sender
-        socket.to(msg.room).emit('base64 file',{
-            sender: msg.username,
-            file: msg.file,
-            fileName: msg.fileName
-          }
-  
-      );
-      });;
+      console.log('received base64 file from' + msg.username);
+      socket.username = msg.username;
+      // socket.broadcast.emit('base64 image', //exclude sender
+      socket.to(msg.room).emit('base64 file',{
+          sender: msg.username,
+          file: msg.file,
+          fileName: msg.fileName
+        }
+
+    );
+    });
+
     socket.on('chat', (data)=>{
         socket.to(data.room).emit('chat', {sender: data.sender, msg: data.msg});
     });
-    socket.on('removeParticipant', (data)=>{
-        console.log('remive'+ data.sender)
-        socket.to(data.room).emit('removeParticipant', {sender: data.sender});
+
+    socket.on('removeParticipants', (data)=>{
+        socket.to(data.room).emit('chat', {sender: data.sender});
     });
 
     socket.on('typingMsg',(data)=>{

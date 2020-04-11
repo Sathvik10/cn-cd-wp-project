@@ -96,10 +96,12 @@ window.addEventListener('load', ()=>{
 
             socket.on('chat', (data)=>{
                 document.getElementById('typing').innerHTML='';
+                console.log(' chat ')
                 h.addChat(data, 'remote');
             })
 
             socket.on('removeParticipant', (data)=>{
+                console.log('remove participant')
                 removeParticipants(data.sender)
             })
 
@@ -126,13 +128,13 @@ window.addEventListener('load', ()=>{
           }
         function removeParticipants(username){
             var element = document.getElementById(username);
+            console.log(element)
             if (element)
                 element.remove()
         }
         function addParticipant(user){
             let newLogo = document.createElement('p');
             newLogo.id = `${user}-logo`;            
-            console.log(user)
             newLogo.innerHTML = user.charAt(0);            
             //create a new div for card
             
@@ -172,9 +174,7 @@ window.addEventListener('load', ()=>{
         }
 
         function init(createOffer, partnerName){
-            console.log(h.getIceServer())
             pc[partnerName] = new RTCPeerConnection(h.getIceServer());
-            console.log('once')
 
             h.getUserMedia().then((stream)=>{
                 //save my stream
@@ -333,6 +333,7 @@ window.addEventListener('load', ()=>{
                         return response.json();
                     })
                     .then(function(data){
+                        console.log(data)
                         if(data.status)
                         {
                             if (data.code === 100) 
@@ -372,7 +373,7 @@ window.addEventListener('load', ()=>{
                 sender: username
             };
 
-            //emit chat message
+            //emit remove message
             socket.emit('removeParticipant', data);
             //console.log(pc[socketId])
             window.location ='/'

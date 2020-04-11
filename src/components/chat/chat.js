@@ -33,7 +33,7 @@ class chat extends React.Component {
     
         }, true);
     
-        if (buttonId != "") {
+        if (buttonId !== "") {
             var clickZone = document.getElementById(buttonId);
     
             var oleft = clickZone.offsetleft;
@@ -110,6 +110,7 @@ class chat extends React.Component {
                     <button type='button' id='custom-button'>Choose A File</button>
                     <br/>
                     <span id='custom-text'>File Name</span>
+                    <br/>
                     <div id="drop-zone">
                      Drop files here...
                     <div id="clickHere" hidden>

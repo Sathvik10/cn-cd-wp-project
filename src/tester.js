@@ -1,7 +1,7 @@
 var spawn = require("child_process").spawn; 
 const fs = require('fs');
 const streamIn = fs.createReadStream('c:\\Users\\sathvik\\Desktop\\badword\\english.csv');
-var process = spawn('python3',["c:\\Users\\sathvik\\Desktop\\badword\\bad.py","gods must be fu crazy INR500"],['cwd'] ); 
+var process = spawn('python3',["c:\\Users\\sathvik\\Desktop\\badword\\bad.py","fuck bye"],['cwd'] ); 
 streamIn.pipe(process.stdin);
 process.stdout.on('data', function(data) {
     console.log(' successful ')

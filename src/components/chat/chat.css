@@ -2,6 +2,7 @@
     height: 90vh;
     float: left;
     color: #ffffff;
+    position: relative;
     overflow: hidden;
 }
 #files {

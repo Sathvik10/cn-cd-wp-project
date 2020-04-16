@@ -22,7 +22,7 @@ function App() {
     //     </a>
     //   </header>
     // </div>
-    <div>
+    <div id ='mane'>
     <Header />
     {/* <nav class="navbar fixed-top bg-info rounded-0 d-print-none">
             <div class="text-white">Video Call</div>

@@ -96,12 +96,17 @@ window.addEventListener('load', ()=>{
 
             socket.on('chat', (data)=>{
                 document.getElementById('typing').innerHTML='';
-                console.log(' chat ')
                 h.addChat(data, 'remote');
+            })
+
+            socket.on('removetype', (data)=>{
+                document.getElementById('typing').innerHTML='';
+                console.log('im back')
             })
 
             socket.on('removeParticipant', (data)=>{
                 console.log('remove participant')
+                //h.leftChat(data)
                 removeParticipants(data.sender)
             })
 
@@ -334,6 +339,7 @@ window.addEventListener('load', ()=>{
                     })
                     .then(function(data){
                         console.log(data)
+                        var Content = data;
                         if(data.status)
                         {
                             if (data.code === 100) 
@@ -342,7 +348,12 @@ window.addEventListener('load', ()=>{
                             }
                             else if (data.code === 169)
                             {
-                                window.alert(data.message)
+                                window.alert(Content.message)
+                                let data = {
+                                    room: room,
+                                };
+                                //emit chat message
+                                socket.emit('removetype', data);
                             }
                         }
                         else
@@ -372,7 +383,7 @@ window.addEventListener('load', ()=>{
                 room: room,
                 sender: username
             };
-
+            sendMsg(username+' left the group ');
             //emit remove message
             socket.emit('removeParticipant', data);
             //console.log(pc[socketId])

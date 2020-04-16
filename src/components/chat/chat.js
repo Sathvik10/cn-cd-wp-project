@@ -98,8 +98,8 @@ class chat extends React.Component {
                     Image Steganography<br/>
                     <input type = "radio" id = "encrypt" name="encrypt-or-decrypt" value ="encrypt" />
                     <label for="encrypt">Encrypt and send</label><br/>
-                    <input type = "radio" id = "decrypt" name="encrypt-or-decrypt" value ="decrypt" />
-                    <label for="decrypt">Decrypt</label><br />
+                    {/* <input type = "radio" id = "decrypt" name="encrypt-or-decrypt" value ="decrypt" />
+                    <label for="decrypt">Decrypt</label><br /> */}
                     <div>
                       Enter the data to be encrypted
                         <input id = "image-steganography-text" type="text" class="form-control form-rounded" placeholder="Text input" />

@@ -32,7 +32,7 @@ class Login extends React.Component {
                                     </div>
                                 </div>
                             </div> */}
-                            <div class="col-md-3 col-sm-4 col-8 flip-box">
+                            {/* <div class="col-md-3 col-sm-4 col-8 flip-box">
                                 <div class="front" id='network'>
                                     <div class="content text-center">
                                     COMPUTER<br/>NETWORKS
@@ -61,8 +61,8 @@ class Login extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-4 col-8 flip-box">
-                                <div class="front" id='web'>
+                            <div class="col-md-3 col-sm-4 col-8 flip-box"> */}
+                                {/* <div class="front" id='web'>
                                     <div class="content text-center">
                                     WEB<br/>
                                     <span class="click-for-more">
@@ -74,7 +74,63 @@ class Login extends React.Component {
                                     HTML <br/> CSS <br/> REACTJS
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
+                            <br></br>
+                            <br></br>
+                            <Row>
+                                <Col md='2' sm ='2' lg ='4'>
+                                    <div class="flip-box">
+                                        <div class="front" id='web'>
+                                            <div class="content text-center">
+                                            WEB<br/>
+                                            <span class="click-for-more">
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="back">
+                                            <div class="content">
+                                            HTML <br/> CSS <br/> REACTJS
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </Col>
+                                <Col md='2' sm ='2' lg ='4' >
+                                    <div class=" flip-box">
+                                    <div class="front" id='compiler'>
+                                        <div class="content text-center">
+                                        COMPLIER<br/>DESIGN
+                                        <span class="click-for-more">
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="back">
+                                        <div class="content">
+                                        NLTK
+                                        <br/>
+                                        
+                                        </div>
+                                    </div>
+                                    </div>
+                                </Col>
+                                <Col md='2' sm ='2' lg ='4' >
+                                    <div class=" flip-box">
+                                    <div class="front" id='network'>
+                                        <div class="content text-center">
+                                        COMPUTER<br/>NETWORKS
+                                        <span class="click-for-more">
+                                        </span>
+                                        </div>
+                                    </div>
+                                    <div class="back">
+                                        <div class="content">
+                                        Sockets.io <br/>
+                                        webRTC
+                                        </div>
+                                    </div>
+                                    </div>
+                                </Col>
+                            </Row>
                     </Col>
 
 

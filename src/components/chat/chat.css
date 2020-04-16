@@ -2,7 +2,6 @@
     height: 90vh;
     float: left;
     color: #ffffff;
-    position: relative;
     overflow: hidden;
 }
 #files {
@@ -19,7 +18,9 @@
     height: 90vh;
     border-radius: 10px;
 }
-
+.card {
+    height: auto;
+}
 #drop-zone {
     /*Sort of important*/
     width: 300px;

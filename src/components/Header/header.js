@@ -27,7 +27,7 @@ class header extends React.Component {
         
                 <Col md='8' xs ='6' id="Shown-col">
                   <img  src={require("../../assets/images/headphone.jpg")} id="App-logo" alt=""/>
-                  <span className="App-name" >skype alla Hype</span>
+                  <span className="App-name" >FIZ BIZ</span>
                 </Col>
 
                 <Col md='4' xs ='6' className="room-comm justify-content-end" hidden id='Hidden-room'>
